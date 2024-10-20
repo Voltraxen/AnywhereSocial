@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - ANYWHERE</title>
+    <style>
+        /* Styles généraux */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle at top left, #0b0b0b, #1a1a1a, #2e004f);
+            color: #fff;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        /* Container principal avec lueur externe réactive */
+        .login-container {
+            background: #1f1f1f;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px 8px rgba(160, 32, 240, 0.6), 0 0 30px 15px rgba(128, 0, 128, 0.4);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            transition: box-shadow 0.4s ease-in-out;
+        }
+
+        /* Lueur par défaut */
+        .login-container.default-glow {
+            box-shadow: 0 0 15px 8px rgba(160, 32, 240, 0.6), 0 0 30px 15px rgba(128, 0, 128, 0.4);
+        }
+
+        /* Lueur lors de la sélection d'un champ */
+        .login-container.username-active {
+            box-shadow: 0 0 15px 8px rgba(50, 205, 50, 0.7), 0 0 30px 15px rgba(34, 139, 34, 0.5);
+        }
+
+        .login-container.password-active {
+            box-shadow: 0 0 15px 8px rgba(70, 130, 180, 0.7), 0 0 30px 15px rgba(65, 105, 225, 0.5);
+        }
+
+        /* Logo et Titre */
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        /* Formulaire */
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 30px);
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: none;
+            background: #2d2d2d;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .login-form input[type="text"]:focus,
+        .login-form input[type="password"]:focus {
+            background: #3d3d3d;
+        }
+
+       
+
+        /* Bouton de connexion */
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            background: #a020f0;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .login-form button:hover {
+            background: #d030ff;
+            transform: translateY(-3px);
+        }
+
+        /* Liens supplémentaires */
+        .login-form .extra-links {
+            margin-top: 15px;
+        }
+
+        .login-form .extra-links a {
+            color: #d030ff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .login-form .extra-links a:hover {
+            color: #fff;
+        }
+
+        /* Texte de copyright */
+        .copyright {
+            margin-top: 15px;
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        /* Styles pour la popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f1f1f;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px 8px rgba(160, 32, 240, 0.6);
+            text-align: center;
+            color: #fff;
+        }
+
+        .popup button {
+            margin-top: 15px;
+            padding: 8px 12px;
+            background: #a020f0;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        // Changement de lueur selon le champ sélectionné
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginContainer = document.querySelector('.login-container');
+            const usernameInput = document.querySelector('input[type="text"]');
+            const passwordInput = document.querySelector('input[type="password"]');
+            const passwordToggle = document.querySelector('.password-toggle');
+            const signupLink = document.querySelector('.extra-links a[href="signup.html"]');
+            const popup = document.querySelector('.popup');
+
+            usernameInput.addEventListener('focus', () => {
+                loginContainer.classList.remove('password-active', 'default-glow');
+                loginContainer.classList.add('username-active');
+            });
+
+            passwordInput.addEventListener('focus', () => {
+                loginContainer.classList.remove('username-active', 'default-glow');
+                loginContainer.classList.add('password-active');
+            });
+
+            usernameInput.addEventListener('blur', () => {
+                loginContainer.classList.remove('username-active');
+                loginContainer.classList.add('default-glow');
+            });
+
+            passwordInput.addEventListener('blur', () => {
+                loginContainer.classList.remove('password-active');
+                loginContainer.classList.add('default-glow');
+            });
+
+
+
+            // Afficher la popup lorsqu'on clique sur "Créer un compte"
+            signupLink.addEventListener('click', (e) => {
+                e.preventDefault(); // Empêcher la redirection
+                popup.style.display = 'block';
+            });
+
+            // Fermer la popup
+            document.querySelector('.popup button').addEventListener('click', () => {
+                popup.style.display = 'none';
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="login-container default-glow">
+        <div class="logo">ANYWHERE</div>
+        <form class="login-form" action="#" method="post">
+            <input type="text" placeholder="Nom d'utilisateur" required>
+            <input type="password" placeholder="Mot de passe" required>
+
+            <button type="submit">Se connecter</button>
+            <div class="extra-links">
+                <a href="signup.html">Créer un compte</a> | <a href="#">Mot de passe oublié ?</a>
+            </div>
+        </form>
+        <div class="copyright">© Anywhere Social 2024 owned and operated by the STRKT Foundation</div>
+    </div>
+
+    <!-- Popup intégrée -->
+    <div class="popup">
+        Eh non, pas maintenant ! Tu dois continuer d'utiliser X ou l'autre truc chelou avec le papillon.
+        <button>Fermer</button>
+    </div>
+</body>
+</html>
+
+    </div>
+</body>
+</html>
+
+
