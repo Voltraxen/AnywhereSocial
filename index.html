@@ -48,17 +48,23 @@
             box-shadow: 0 0 15px 8px rgba(70, 130, 180, 0.7), 0 0 30px 15px rgba(65, 105, 225, 0.5);
         }
 
-        /* Logo et Titre */
+        /* Logo et Titre avec effet au survol */
         .logo {
             font-size: 2em;
             font-weight: bold;
             color: #ffffff;
             margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            color: #a020f0; /* Violet au survol */
         }
 
         /* Formulaire */
         .login-form input[type="text"],
-        .login-form input[type="password"] {
+        .login-form input[type="password"],
+        .login-form input[type="email"] {
             width: calc(100% - 30px);
             padding: 12px 15px;
             margin: 10px 0;
@@ -68,15 +74,15 @@
             color: #fff;
             font-size: 1em;
             outline: none;
-            transition: background 0.3s;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
         .login-form input[type="text"]:focus,
-        .login-form input[type="password"]:focus {
+        .login-form input[type="password"]:focus,
+        .login-form input[type="email"]:focus {
             background: #3d3d3d;
+            box-shadow: 0 0 5px 3px rgba(160, 32, 240, 0.5);
         }
-
-       
 
         /* Bouton de connexion */
         .login-form button {
@@ -121,8 +127,8 @@
             color: #888;
         }
 
-        /* Styles pour la popup */
-        .popup {
+        /* Styles pour les popups */
+        .popup, .reset-popup {
             display: none;
             position: fixed;
             top: 50%;
@@ -136,7 +142,7 @@
             color: #fff;
         }
 
-        .popup button {
+        .popup button, .reset-popup button {
             margin-top: 15px;
             padding: 8px 12px;
             background: #a020f0;
@@ -153,9 +159,10 @@
             const loginContainer = document.querySelector('.login-container');
             const usernameInput = document.querySelector('input[type="text"]');
             const passwordInput = document.querySelector('input[type="password"]');
-            const passwordToggle = document.querySelector('.password-toggle');
             const signupLink = document.querySelector('.extra-links a[href="signup.html"]');
+            const forgotPasswordLink = document.querySelector('.extra-links a[href="#"]');
             const popup = document.querySelector('.popup');
+            const resetPopup = document.querySelector('.reset-popup');
 
             usernameInput.addEventListener('focus', () => {
                 loginContainer.classList.remove('password-active', 'default-glow');
@@ -177,8 +184,6 @@
                 loginContainer.classList.add('default-glow');
             });
 
-
-
             // Afficher la popup lorsqu'on clique sur "Créer un compte"
             signupLink.addEventListener('click', (e) => {
                 e.preventDefault(); // Empêcher la redirection
@@ -189,6 +194,17 @@
             document.querySelector('.popup button').addEventListener('click', () => {
                 popup.style.display = 'none';
             });
+
+            // Afficher la popup de réinitialisation de mot de passe
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault(); // Empêcher la redirection
+                resetPopup.style.display = 'block';
+            });
+
+            // Fermer la popup de réinitialisation de mot de passe
+            document.querySelector('.reset-popup button').addEventListener('click', () => {
+                resetPopup.style.display = 'none';
+            });
         });
     </script>
 </head>
@@ -198,7 +214,6 @@
         <form class="login-form" action="#" method="post">
             <input type="text" placeholder="Nom d'utilisateur" required>
             <input type="password" placeholder="Mot de passe" required>
-
             <button type="submit">Se connecter</button>
             <div class="extra-links">
                 <a href="signup.html">Créer un compte</a> | <a href="#">Mot de passe oublié ?</a>
@@ -207,16 +222,18 @@
         <div class="copyright">© Anywhere Social 2024 owned and operated by the STRKT Foundation</div>
     </div>
 
-    <!-- Popup intégrée -->
+    <!-- Popup intégrée pour la création de compte -->
     <div class="popup">
         Eh non, pas maintenant ! Tu dois continuer d'utiliser X ou l'autre truc chelou avec le papillon.
         <button>Fermer</button>
     </div>
-</body>
-</html>
 
+    <!-- Popup intégrée pour la réinitialisation de mot de passe -->
+    <div class="reset-popup">
+        <p>Entrez votre e-mail pour recevoir un lien de réinitialisation :</p>
+        <input type="email" placeholder="Votre e-mail" required style="width: calc(100% - 30px); padding: 10px; margin: 10px 0; border: none; background: #2d2d2d; border-radius: 8px; color: #fff; box-shadow: 0 0 5px 3px rgba(160, 32, 240, 0.5);">
+        <button>Envoyer</button>
     </div>
 </body>
 </html>
-
 
